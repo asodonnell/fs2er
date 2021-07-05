@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import TrainTimes from '../components/TrainTimes';
 import styled from 'styled-components';
 
 
@@ -12,10 +13,20 @@ const Container = styled.div`
   justify-content: space-around;
 `;
 
+const trainDummyData = {
+  depTime: "00:00", 
+  line: "Blackburn", 
+  mins: "now", 
+  platform: "0"
+} 
+
+
 const Home = () => (
     <Container>
         <Header />
-        <div>hello</div>
+        <div>
+        <TrainTimes departureInfo={trainDummyData} />
+        </div>
         <Footer />
     </Container>
   );
