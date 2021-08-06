@@ -9,10 +9,10 @@ const BASE_URL = "https://timetableapi.ptv.vic.gov.au";
 
 
 function App() {
-  const getStopsBySearchTerm = (route_id: number)  =>  {
+  const getStopByRouteId = (route_id: number)  =>  {
     return fetch(`${BASE_URL}${ptvSig.pathWithSig(
-      `/v3/departures/route_type/0/stop/1071/route/${route_id}?max_results`,  
-      [{ name:  'route_types', value:  '0'  }],
+      `/v3/departures/route_type/0/stop/1071/route/${route_id}`,  
+      [{ name:  'route_types', value:  '0'  }, { name:  'max_results', value:  '20'  }],
        DEV_ID, DEV_KEY)}`)
        .then(res  =>  res.json());
     }
@@ -25,7 +25,8 @@ function App() {
        .then(res  =>  res.json());
   }
      
-    getStopsBySearchTerm(2).then(data => {
+    getStopByRouteId(2).then(data => {
+      console.log(data);
       data.departures.forEach((element : any) => {
         getRunInfo(element.run_id).then(d => {
           console.log(d);
