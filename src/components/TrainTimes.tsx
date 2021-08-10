@@ -1,25 +1,32 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+import { Run } from "../types/types";
 
 const TrainTimesStyled = styled.div`
   font-size: 14px;
-  background-color: #F6F6F6;
+  background-color: #f6f6f6;
   border-radius: 10px;
   display: inline-block;
   padding: 5px 30px;
 `;
 
-const TrainTimes = ({departureInfo}) => {
-    const {depTime, line, mins, platform} = departureInfo
+interface Props {
+  departureInfo: Run | null;
+}
 
-    return <TrainTimesStyled>
+const TrainTimes = ({ departureInfo }: Props) => {
+
+  return (
+    <TrainTimesStyled>
       <div>
-          Depature Time: {depTime} | Train Line: {line} 
+        Depature Time: {departureInfo?.scheduled_departure_utc} | Train Line:{" "}
+        {departureInfo?.destination_name}
       </div>
       <div>
-          Minutes until departure: {mins} | Platform: {platform} 
+        Minutes until departure: {departureInfo?.estimated_departure_utc} | Platform: {departureInfo?.platform_number}
       </div>
-  </TrainTimesStyled>
+    </TrainTimesStyled>
+  );
 };
 
 export default TrainTimes;

@@ -7,11 +7,8 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "@types/react": "^17.0.14",
+    "@types/react": "^17.0.16",
     "@types/react-dom": "^17.0.9",
-    "axios": "^0.21.1",
-    "axois": "^0.0.1-security",
-    "hmacsha1": "^1.0.0",
     "ptv-api-signature": "^1.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -46,6 +43,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.8"
+    "@types/react-router-dom": "^5.1.8",
+    "@types/styled-components": "^5.1.12"
   }
 }
