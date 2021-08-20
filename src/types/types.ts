@@ -1,9 +1,9 @@
 export type Departure = {
-    estimated_departure_utc: Date;
+    estimated_departure_utc: string;
     platform_number: string;
     route_id: number;
     run_ref: string;
-    scheduled_departure_utc: Date;
+    scheduled_departure_utc: string;
 }
 
 export type Run = {
