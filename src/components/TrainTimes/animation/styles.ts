@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const TestCircle = styled.div`
+export const LiveCircle = styled.div`
     background-color: #F58634;
     width: 5px;
     height: 5px;

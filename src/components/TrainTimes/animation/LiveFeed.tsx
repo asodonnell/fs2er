@@ -1,7 +1,7 @@
 import React from 'react';
-import { TestCircle } from './styles';
+import { LiveCircle } from './styles';
 
 
 export const LiveFeed = () => (
-  <TestCircle />
+  <LiveCircle />
 );

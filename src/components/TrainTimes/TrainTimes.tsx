@@ -1,6 +1,6 @@
 import React from "react";
 import { LiveFeed } from "./animation/LiveFeed";
-import { Row, TrainTimesStyled, EstimatedTime } from "./styles";
+import { Row, TrainTimesStyled, EstimatedTime, GrowWrapper } from "./styles";
 interface Props {
   scheduled_departure_utc: string;
   trainLine: string;
@@ -12,7 +12,15 @@ const convertDate = (departure_time: string) => {
   const depatureTimeAsDate = new Date(departure_time);
   const h = depatureTimeAsDate.getHours();
   const m = depatureTimeAsDate.getMinutes();
+  console.log(m);
 
+  if(h < 10 && m < 10){
+    return `0${h}:0${m}`;
+  } else if (m < 10){
+    return `${h}:0${m}`;
+  } else if (h < 10){
+    return `0${h}:0${m}`;
+  } 
   return `${h}:${m}`;
 };
 
@@ -32,26 +40,28 @@ export const TrainTimes = ({
   platform_number,
 }: Props) => {
   return (
-    <TrainTimesStyled>
-      <Row>
-        <div>{trainLine} Line</div>
-        <div>{convertDate(scheduled_departure_utc)}</div>
-      </Row>
-      <Row>
-        <div>Platform {platform_number}</div>
-        <div>
-          <EstimatedTime>
-            {estimated_departure_utc ? (
-              <>
-              <LiveFeed />
-                {getTimeDiff(estimated_departure_utc)} mins 
-              </>
-            ) : (
-              ""
-            )}
-          </EstimatedTime>
-        </div>
-      </Row>
-    </TrainTimesStyled>
+    <GrowWrapper>
+      <TrainTimesStyled>
+        <Row>
+          <div>{trainLine} Line</div>
+          <div>{convertDate(scheduled_departure_utc)}</div>
+        </Row>
+        <Row>
+          <div>Platform {platform_number}</div>
+          <div>
+            <EstimatedTime>
+              {estimated_departure_utc ? (
+                <>
+                  <LiveFeed />
+                  {getTimeDiff(estimated_departure_utc)} mins
+                </>
+              ) : (
+                ""
+              )}
+            </EstimatedTime>
+          </div>
+        </Row>
+      </TrainTimesStyled>
+    </GrowWrapper>
   );
 };
