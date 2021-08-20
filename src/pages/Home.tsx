@@ -92,14 +92,17 @@ const Home = () => {
         <Container>
           <Header />
           <div>
-            {departures.map((val, i) => (
-              <TrainTimes
-                platform_number={val?.platform_number}
-                estimated_departure_utc={val?.estimated_departure_utc}
-                scheduled_departure_utc={val?.scheduled_departure_utc}
-                trainLine={runs[i]?.run?.destination_name}
-              />
-            ))}
+            {departures.map((val, i) => {
+              // if (runs[i]?.run?.express_stop_count === 0) {
+               return(<TrainTimes
+                  key={val.run_ref}
+                  platform_number={val?.platform_number}
+                  estimated_departure_utc={val?.estimated_departure_utc}
+                  scheduled_departure_utc={val?.scheduled_departure_utc}
+                  trainLine={runs[i]?.run?.destination_name}
+                />);
+              // }
+            })}
           </div>
           <Footer />
         </Container>

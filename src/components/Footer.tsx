@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-
+import { LiveFeed } from './TrainTimes/animation/LiveFeed'
 const ParentFooter = styled.div`
   width: 100vw;
 `;
