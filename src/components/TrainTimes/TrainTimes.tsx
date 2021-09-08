@@ -12,13 +12,12 @@ const convertDate = (departure_time: string) => {
   const depatureTimeAsDate = new Date(departure_time);
   const h = depatureTimeAsDate.getHours();
   const m = depatureTimeAsDate.getMinutes();
-  
   if (h < 10 && m < 10) {
     return `0${h}:0${m}`;
   } else if (m < 10) {
     return `${h}:0${m}`;
   } else if (h < 10) {
-    return `0${h}:0${m}`;
+    return `0${h}:${m}`;
   }
   return `${h}:${m}`;
 };
@@ -49,16 +48,12 @@ export const TrainTimes = ({
           <div>Platform {platform_number}</div>
           <div>
             <EstimatedTime>
-              {estimated_departure_utc ? (
+              {estimated_departure_utc && (
                 <>
                   <LiveFeed />
                   {getTimeDiff(estimated_departure_utc)} mins
                 </>
-              ) : 
-              <>
-              <LiveFeed />
-              {getTimeDiff(scheduled_departure_utc)} mins
-            </>
+              ) 
               }
             </EstimatedTime>
           </div>

@@ -1,3 +1,14 @@
+export type RouteInfo = {
+    departures: Departure[];
+    routes: any;
+    runs: any;
+    directions: any;
+    stops: any;
+    disruptions: any;
+    status: any;
+}
+
+
 export type Departure = {
     estimated_departure_utc: string;
     platform_number: string;
