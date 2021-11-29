@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# flinders-to-east-richmond
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> ❌ We say no more to apps such as PTV and Google Maps blatantly lying to the faces of REA Employees. ❌ <br><br> 'Flinders to East Richmond' will develop a state-of-the-art algorithm technology to display pinpoint accurate times of trains departing from Flinders Street Station that are undoubtedly stopping at East Richmond Station. <br><br> This data will become available to you in the form of a leading edge react application utilising the most efficient software engineering design paradigms and philosphies currently known to man.<br><br> Get ready to finally say goodbye to the gruelling and laborious trek from Richmond Station to REA Headquarters.
 
-## Available Scripts
 
-In the project directory, you can run:
+## Links
+PTV API Documentation: http://timetableapi.ptv.vic.gov.au/swagger/ui/index
 
-### `npm start`
+## Glossary
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Peak times: Before 9am
+- Non-peak times: After 9am
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- `stop_id`: Station
+- `route_id`: Train line
+- `platform_number`: Platform
+- `run-id`: unique id for each train
+- `scheduled_departure_utc`: scheduled departure times (UTC format)
+- `estimated_departure_utc`: estimated departure times (UTC format)
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Key Values
+### APIs
+-  `Departures` API: "/v3/departures/route_type/0/stop/1071/route/$route_id?max_results=5"
+-  `Runs` API: "/v3/departures/route_type/0/stop/1071/route/$route_id?max_results=5"
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Keys
+- dev id: `3001885`
+- API key: `9DD849CB6135AC9AECF6161E87DC8E5D9291A63A`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Train Line IDs
+- Belgrave: `route_id: 2`
+- Glen Waverley: `route_id: 7`
+- Alamein: `route_id: 1`
+- Lilydale: `route_id: 9`
 
-### `npm run eject`
+### Stop IDs
+- Flinders Street Station: `stop_id: 1070`
+- East Richmond Station: `stop_id: 1059`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## What is wrong with the PTV API currently?
+- When journey planning from Flinders to East Richmond *before peak times*:
+  - Shows Lilydale trains. None of which stop at East Richmond
+  - Doesn't show Blackburn (stopping all station) trains. All of which stop at East Richmond.
+- When journey planning from Flinders to East Richmond *after peak times*:
+  - Only Glen Waverley and Blackburn trains stop at East Richmond
+  - All other trains pass.
+  
+## Our solution
+- Call the API for East Richmond departures heading towards Belgrave/Glen Waverley/Alamein/Lilydale. These are all city outbound trains.
+- Retrieve the `run-id` for these trains.
+- Map these `run-id`s back to departing trains from Flinders Street Station.
+- ✨ACCURATE TRAIN TIMES✨
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Code Logic
+1. Query `Departures` API for the next 5 trains departing from Flinders Street Station to Belgrave, Lilydale, Alamein and Glen Waverley.
+2. Retrieve `run_id` for each departure 
+3. For each `run_id`, query the `Runs` API
+4. Capture all runs with `express_stop_count` of 0* </br>
+*note: only non-express trains stop at East Richmond Station
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Next Steps
+- Arrival time to East Richmond
+- 
+- Monetise
+- Upload to Play Store
+- iOS App
+- Web App
