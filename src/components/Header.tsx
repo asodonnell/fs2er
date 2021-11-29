@@ -15,7 +15,7 @@ const Header = ({clickHandler} : Props) => (
       Flinders Street to East Richmond Station
     </h1>
     <button onClick={clickHandler}>
-    <img src="/Users/alex.odonnell/Code/fs2er/src/components/refresh.png" /> 
+    <img /> 
       refresh
     </button>
   </ParentHeader>
