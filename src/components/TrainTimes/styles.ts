@@ -59,3 +59,6 @@ export const EstimatedTime = styled.div`
   justify-content: space-between;
 `;
  
+export const NoActiveTime = styled.div`
+ color: #a9a9a9;
+`;

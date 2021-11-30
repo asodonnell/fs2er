@@ -1,6 +1,12 @@
 import React from "react";
 import { LiveFeed } from "./animation/LiveFeed";
-import { Row, TrainTimesStyled, EstimatedTime, GrowWrapper } from "./styles";
+import {
+  Row,
+  TrainTimesStyled,
+  EstimatedTime,
+  GrowWrapper,
+  NoActiveTime,
+} from "./styles";
 interface Props {
   scheduled_departure_utc: string;
   trainLine: string;
@@ -26,10 +32,23 @@ const getTimeDiff = (estimated_time: string) => {
   const estimatedTimeAsDate = new Date(estimated_time);
   const currTime = new Date(Date.now());
 
-  var diff = (currTime.getTime() - estimatedTimeAsDate.getTime()) / 1000;
-  diff /= 60;
-  return Math.abs(Math.round(diff));
+  const diffInMins = ((currTime.getTime() - estimatedTimeAsDate.getTime()) / 1000) / 60;
+
+  const timeInMins = Math.abs(Math.round(diffInMins));
+  
+
+  return timeInMins;
 };
+
+const displayEstimatedTime = (timeInMins: number): string =>  {
+  if (timeInMins > 60){
+    const timeInHours = timeInMins / 60;
+    const rounded = Math.abs(Math.round(timeInHours));
+    return `${rounded} hours`; 
+  } else {
+    return `${timeInMins} mins`; 
+  }
+}
 
 export const TrainTimes = ({
   scheduled_departure_utc,
@@ -48,13 +67,18 @@ export const TrainTimes = ({
           <div>Platform {platform_number}</div>
           <div>
             <EstimatedTime>
-              {estimated_departure_utc && (
+              {estimated_departure_utc ? (
                 <>
                   <LiveFeed />
-                  {getTimeDiff(estimated_departure_utc)} mins
+                  {displayEstimatedTime(getTimeDiff(estimated_departure_utc))}
                 </>
-              ) 
-              }
+              ) : (
+                <>
+                  <NoActiveTime>
+                    {displayEstimatedTime(getTimeDiff(scheduled_departure_utc))}
+                  </NoActiveTime>
+                </>
+              )}
             </EstimatedTime>
           </div>
         </Row>
