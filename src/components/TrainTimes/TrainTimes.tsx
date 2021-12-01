@@ -50,6 +50,39 @@ const displayEstimatedTime = (timeInMins: number): string =>  {
   }
 }
 
+const platformColour = (platform: string): string => {
+  var colour: string;
+  switch(platform) {
+    case "2":
+      colour = '#BD1616'
+      break;
+    case "3":
+      colour = '#ED711F'
+      break;
+    case "4":
+      colour = '#2D8659'
+      break;
+    case "5":
+      colour = '#8154AB'
+      break;
+    case "6":
+      colour = '#2BC5CA'
+      break;
+    case "7":
+      colour = '#FCCA36'
+      break;
+    case "8":
+      colour = '#0078BD'
+      break;
+    case "9":
+      colour = '#F2636F'
+      break;
+    default:
+      colour = '#8B4513'
+  }
+  return colour;
+}
+
 export const TrainTimes = ({
   scheduled_departure_utc,
   trainLine = "",
@@ -58,7 +91,7 @@ export const TrainTimes = ({
 }: Props) => {
   return (
     <GrowWrapper>
-      <TrainTimesStyled>
+      <TrainTimesStyled platformColour={platformColour(platform_number)}>
         <Row>
           <div>{trainLine} Line</div>
           <div>{convertDate(scheduled_departure_utc)}</div>

@@ -1,9 +1,14 @@
 import styled from "styled-components";
 
-export const TrainTimesStyled = styled.div`
+type StyledComponentProps = {
+  platformColour: string;
+};
+
+export const TrainTimesStyled = styled.div<StyledComponentProps>`
   background-color: #ffffff;
   border-left-style: solid;
-  border-color: #bd1616;
+  border-color: ${(props: { platformColour: any; }) => props.platformColour};
+  border-width: 0.3rem;
   padding: 5px;
   -webkit-animation: scale-up-ver-top 0.7s cubic-bezier(0.39, 0.575, 0.565, 1)
     both;
