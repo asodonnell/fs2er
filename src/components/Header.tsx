@@ -34,15 +34,18 @@ const RefreshBtn = styled.button`
 
 interface Props {
   clickHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  isLoading: boolean;
 }
 
-const Header = ({ clickHandler }: Props) => (
-  <ParentHeader>
-    <h1>Flinders Street to East Richmond Station</h1>
-    <RefreshBtn onClick={clickHandler}>
-      <RiRefreshLine /> Refresh
-    </RefreshBtn>
-  </ParentHeader>
-);
+const Header = ({ clickHandler, isLoading }: Props) => {
+  return (
+    <ParentHeader>
+      <h1>Flinders Street to East Richmond Station</h1>
+      <RefreshBtn onClick={clickHandler} disabled={isLoading}>
+        <RiRefreshLine /> Refresh
+      </RefreshBtn>
+    </ParentHeader>
+  );
+};
 
 export default Header;

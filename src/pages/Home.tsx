@@ -50,7 +50,7 @@ const Home = () => {
   }, [refresh]);
 
   useEffect(() => {
-    if(autoRefresh){
+    if (autoRefresh) {
       getRouteInfo();
     }
   }, [autoRefresh]);
@@ -70,26 +70,23 @@ const Home = () => {
   return (
     <>
       <Container>
-        <Header clickHandler={refreshFeed} />
+        <Header clickHandler={refreshFeed} isLoading={loading} />
         <div>
           {loading ? (
-            <>
-              {Array(10).fill(<SkeletonTrainTimes />)}
-            </>
+            <>{Array(10).fill(<SkeletonTrainTimes />)}</>
           ) : (
             <>
               {departures.map((val, i) => {
                 if (runs[i]?.run?.express_stop_count === 0) {
-                return (
-                  <TrainTimes
-                    key={val.run_ref}
-                    platform_number={val?.platform_number}
-                    estimated_departure_utc={val?.estimated_departure_utc}
-                    scheduled_departure_utc={val?.scheduled_departure_utc}
-                    trainLine={runs[i]?.run?.destination_name}
-                  />
-
-                );
+                  return (
+                    <TrainTimes
+                      key={val.run_ref}
+                      platform_number={val?.platform_number}
+                      estimated_departure_utc={val?.estimated_departure_utc}
+                      scheduled_departure_utc={val?.scheduled_departure_utc}
+                      trainLine={runs[i]?.run?.destination_name}
+                    />
+                  );
                 } else {
                   return null;
                 }
