@@ -44,44 +44,44 @@ const displayEstimatedTime = (timeInMins: number): string => {
   if (timeInMins > 60) {
     const timeInHours = timeInMins / 60;
     const rounded = Math.abs(Math.round(timeInHours));
-    return `${rounded} hours`;
+    return rounded === 1 ? `1 hour` : `${rounded} hours`;
   } else {
-    return `${timeInMins} mins`;
+    return timeInMins === 1 ? `1 min` : `${timeInMins} mins`;
   }
 };
 
 const platformColour = (platform: string): string => {
   var colour: string;
-  switch(platform) {
+  switch (platform) {
     case "2":
-      colour = '#BD1616'
+      colour = "#BD1616";
       break;
     case "3":
-      colour = '#ED711F'
+      colour = "#ED711F";
       break;
     case "4":
-      colour = '#2D8659'
+      colour = "#2D8659";
       break;
     case "5":
-      colour = '#8154AB'
+      colour = "#8154AB";
       break;
     case "6":
-      colour = '#2BC5CA'
+      colour = "#2BC5CA";
       break;
     case "7":
-      colour = '#FCCA36'
+      colour = "#FCCA36";
       break;
     case "8":
-      colour = '#0078BD'
+      colour = "#0078BD";
       break;
     case "9":
-      colour = '#F2636F'
+      colour = "#F2636F";
       break;
     default:
-      colour = '#8B4513'
+      colour = "#8B4513";
   }
   return colour;
-}
+};
 
 export const TrainTimes = ({
   scheduled_departure_utc,
