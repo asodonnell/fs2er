@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { RiRefreshLine } from "react-icons/ri";
 
 const ParentHeader = styled.div`
@@ -32,6 +32,23 @@ const RefreshBtn = styled.button`
   }
 `;
 
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const Rotate = styled.div`
+  display: inline-block;
+  animation: ${rotate} 2s linear infinite;
+  /* padding: 2rem 1rem; */
+  font-size: 1.2rem;
+`;
+
 interface Props {
   clickHandler: (event: React.MouseEvent<HTMLButtonElement>) => void;
   isLoading: boolean;
@@ -42,7 +59,14 @@ const Header = ({ clickHandler, isLoading }: Props) => {
     <ParentHeader>
       <h1>Flinders Street to East Richmond Station</h1>
       <RefreshBtn onClick={clickHandler} disabled={isLoading}>
-        <RiRefreshLine /> Refresh
+        {isLoading === true ? (
+          <Rotate>
+            <RiRefreshLine />
+          </Rotate>
+        ) : (
+          <RiRefreshLine />
+        )}
+        Refresh
       </RefreshBtn>
     </ParentHeader>
   );
