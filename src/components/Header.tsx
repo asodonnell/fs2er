@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { RiRefreshLine } from "react-icons/ri";
 
 const ParentHeader = styled.div`
-  width: 100vw;
   display: flex;
   align-items: center;
   flex-direction: column;
