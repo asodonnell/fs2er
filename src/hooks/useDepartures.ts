@@ -6,6 +6,11 @@ export const departureListChange = async (result: any) => {
 };
 
 const runListChange = async (promises: Promise<any>[]) => {
-  const vals = await Promise.all(promises);
-  return vals;
+  try{
+    const vals = await Promise.all(promises);
+    return vals;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };

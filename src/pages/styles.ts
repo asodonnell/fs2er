@@ -7,3 +7,8 @@ export const Container = styled.div`
   margin: auto;
   max-width: 700px;
 `;
+
+export const ErrorMessage = styled.div`
+  margin: 10px;
+  font-style: italic;
+`;

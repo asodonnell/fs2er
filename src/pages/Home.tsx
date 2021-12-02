@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useState, useEffect } from "react";
 import { TrainTimes } from "../components/TrainTimes/TrainTimes";
-import { Container } from "./styles";
+import { Container, ErrorMessage } from "./styles";
 import { departureListChange } from "../hooks/useDepartures";
 import { getDepartures } from "../common/ptv-api";
 import { RouteInfo } from "../types/types";
@@ -15,35 +15,47 @@ const Home = () => {
   const [refresh, setRefresh] = useState<boolean>(false);
   const [autoRefresh, setAutoRefresh] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
 
   const getRouteInfo = async () => {
-    setLoading(true);
+
     console.log("fetching...");
     Promise.all([
       getDepartures("1"),
       getDepartures("2"),
       getDepartures("7"),
       getDepartures("9"),
-    ]).then((values: RouteInfo[]) => {
-      const departures = values.flatMap((vals) => vals.departures);
+    ])
+      .then((values: RouteInfo[]) => {
+        const departures = values.flatMap((vals) => vals.departures);
 
-      const sortedTimeDepartures = departures.sort((a, b) => {
-        return (
-          Date.parse(a.scheduled_departure_utc) -
-          Date.parse(b.scheduled_departure_utc)
-        );
-      });
+        const sortedTimeDepartures = departures.sort((a, b) => {
+          return (
+            Date.parse(a.scheduled_departure_utc) -
+            Date.parse(b.scheduled_departure_utc)
+          );
+        });
 
-      setDepartures(sortedTimeDepartures);
-      departureListChange(sortedTimeDepartures).then((r) => {
-        setRuns(r);
-        setLoading(false);
-        console.log("fetched");
+        setDepartures(sortedTimeDepartures);
+        departureListChange(sortedTimeDepartures).then((r) => {
+          if (r !== null) {
+            setRuns(r);
+            setError(false);
+          } else {
+            setError(true);
+          }
+          setLoading(false);
+          console.log("fetched");
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(true);
       });
-    });
   };
 
   useEffect(() => {
+    setLoading(true);
     setDepartures([]);
     setRuns([]);
     getRouteInfo();
@@ -72,7 +84,7 @@ const Home = () => {
       <Container>
         <Header clickHandler={refreshFeed} isLoading={loading} />
         <div>
-          {loading ? (
+          {loading && !error ? (
             <>{Array(10).fill(<SkeletonTrainTimes />)}</>
           ) : (
             <>
@@ -91,6 +103,16 @@ const Home = () => {
                   return null;
                 }
               })}
+            </>
+          )}
+          {error && (
+            <>
+              <ErrorMessage> Oopsies!</ErrorMessage>
+              <ErrorMessage>
+                {" "}
+                There was an error, probably PTV's API.
+              </ErrorMessage>
+              <ErrorMessage> Please refresh the page. Sorry!</ErrorMessage>
             </>
           )}
         </div>
