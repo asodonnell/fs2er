@@ -7,14 +7,17 @@ import { Container } from "./styles";
 import { departureListChange } from "../hooks/useDepartures";
 import { getDepartures } from "../common/ptv-api";
 import { RouteInfo } from "../types/types";
+import { SkeletonTrainTimes } from "../components/skeletons/SkeletonTrainTimes/SkeletonTrainTimes";
 
 const Home = () => {
   const [departures, setDepartures] = useState<any[]>([]);
   const [runs, setRuns] = useState<any[]>([]);
   const [refresh, setRefresh] = useState<boolean>(false);
   const [autoRefresh, setAutoRefresh] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const getRouteInfo = async () => {
+    setLoading(true);
     console.log("fetching...");
     Promise.all([
       getDepartures("1"),
@@ -34,6 +37,7 @@ const Home = () => {
       setDepartures(sortedTimeDepartures);
       departureListChange(sortedTimeDepartures).then((r) => {
         setRuns(r);
+        setLoading(false);
         console.log("fetched");
       });
     });
@@ -68,21 +72,30 @@ const Home = () => {
       <Container>
         <Header clickHandler={refreshFeed} />
         <div>
-          {departures.map((val, i) => {
-            if (runs[i]?.run?.express_stop_count === 0) {
-              return (
-                <TrainTimes
-                  key={val.run_ref}
-                  platform_number={val?.platform_number}
-                  estimated_departure_utc={val?.estimated_departure_utc}
-                  scheduled_departure_utc={val?.scheduled_departure_utc}
-                  trainLine={runs[i]?.run?.destination_name}
-                />
-              );
-            } else {
-              return null;
-            }
-          })}
+          {loading ? (
+            <>
+              {Array(10).fill(<SkeletonTrainTimes />)}
+            </>
+          ) : (
+            <>
+              {departures.map((val, i) => {
+                if (runs[i]?.run?.express_stop_count === 0) {
+                return (
+                  <TrainTimes
+                    key={val.run_ref}
+                    platform_number={val?.platform_number}
+                    estimated_departure_utc={val?.estimated_departure_utc}
+                    scheduled_departure_utc={val?.scheduled_departure_utc}
+                    trainLine={runs[i]?.run?.destination_name}
+                  />
+
+                );
+                } else {
+                  return null;
+                }
+              })}
+            </>
+          )}
         </div>
         <Footer />
       </Container>
