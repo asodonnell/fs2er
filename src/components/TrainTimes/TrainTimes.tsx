@@ -18,14 +18,13 @@ const convertDate = (departure_time: string) => {
   const depatureTimeAsDate = new Date(departure_time);
   const h = depatureTimeAsDate.getHours();
   const m = depatureTimeAsDate.getMinutes();
-  if (h < 10 && m < 10) {
-    return `0${h}:0${m}`;
-  } else if (m < 10) {
-    return `${h}:0${m}`;
-  } else if (h < 10) {
-    return `0${h}:${m}`;
-  }
-  return `${h}:${m}`;
+
+  const hIn12Hour = h > 12 ? h - 12 : h;
+  const addZeroToHour = hIn12Hour < 10 ? `0${hIn12Hour}` : `${hIn12Hour}`;
+  const addZeroToMinute = m < 10 ? `0${m}` : `${m}`;
+  const draftTime = `${addZeroToHour}:${addZeroToMinute}`;
+  const finalTime = h > 12 ? `${draftTime}pm` : `${draftTime}am`;
+  return finalTime;
 };
 
 const getTimeDiff = (estimated_time: string) => {
