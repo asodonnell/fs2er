@@ -12,35 +12,57 @@ const Home = () => {
   const [departures, setDepartures] = useState<any[]>([]);
   const [runs, setRuns] = useState<any[]>([]);
   const [refresh, setRefresh] = useState<boolean>(false);
+  const [autoRefresh, setAutoRefresh] = useState<boolean>(false);
 
   const getRouteInfo = async () => {
+    console.log("fetching...");
+    Promise.all([
+      getDepartures("1"),
+      getDepartures("2"),
+      getDepartures("7"),
+      getDepartures("9"),
+    ]).then((values: RouteInfo[]) => {
+      const departures = values.flatMap((vals) => vals.departures);
 
-    Promise.all([getDepartures("1"), getDepartures("2"), getDepartures("7"), getDepartures("9")]).then((values: RouteInfo[]) => {
-      const departures = values.flatMap(vals => vals.departures);
-      
-      const sortedTimeDepartures = departures.sort((a,b) => {
-        return (Date.parse(a.scheduled_departure_utc) - Date.parse(b.scheduled_departure_utc));
+      const sortedTimeDepartures = departures.sort((a, b) => {
+        return (
+          Date.parse(a.scheduled_departure_utc) -
+          Date.parse(b.scheduled_departure_utc)
+        );
       });
-      
+
       setDepartures(sortedTimeDepartures);
       departureListChange(sortedTimeDepartures).then((r) => {
         setRuns(r);
+        console.log("fetched");
       });
     });
-    
-    
-  }
-  
+  };
+
   useEffect(() => {
     setDepartures([]);
     setRuns([]);
-   getRouteInfo();
-    
-    }, [refresh]);
+    getRouteInfo();
+  }, [refresh]);
 
-    const refreshFeed = () => {
-      setRefresh(!refresh);
+  useEffect(() => {
+    if(autoRefresh){
+      getRouteInfo();
     }
+  }, [autoRefresh]);
+
+  const refreshFeed = () => {
+    setRefresh(!refresh);
+  };
+
+  const refreshItems = async () => {
+    setTimeout(() => {
+      setAutoRefresh(!autoRefresh);
+    }, 15_000);
+  };
+
+  refreshItems();
+
   return (
     <>
       <Container>
@@ -48,17 +70,17 @@ const Home = () => {
         <div>
           {departures.map((val, i) => {
             if (runs[i]?.run?.express_stop_count === 0) {
-            return (
-              <TrainTimes
-                key={val.run_ref}
-                platform_number={val?.platform_number}
-                estimated_departure_utc={val?.estimated_departure_utc}
-                scheduled_departure_utc={val?.scheduled_departure_utc}
-                trainLine={runs[i]?.run?.destination_name}
-              />
-            );
+              return (
+                <TrainTimes
+                  key={val.run_ref}
+                  platform_number={val?.platform_number}
+                  estimated_departure_utc={val?.estimated_departure_utc}
+                  scheduled_departure_utc={val?.scheduled_departure_utc}
+                  trainLine={runs[i]?.run?.destination_name}
+                />
+              );
             } else {
-              return null
+              return null;
             }
           })}
         </div>
