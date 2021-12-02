@@ -32,23 +32,23 @@ const getTimeDiff = (estimated_time: string) => {
   const estimatedTimeAsDate = new Date(estimated_time);
   const currTime = new Date(Date.now());
 
-  const diffInMins = ((currTime.getTime() - estimatedTimeAsDate.getTime()) / 1000) / 60;
+  const diffInMins =
+    (currTime.getTime() - estimatedTimeAsDate.getTime()) / 1000 / 60;
 
   const timeInMins = Math.abs(Math.round(diffInMins));
-  
 
   return timeInMins;
 };
 
-const displayEstimatedTime = (timeInMins: number): string =>  {
-  if (timeInMins > 60){
+const displayEstimatedTime = (timeInMins: number): string => {
+  if (timeInMins > 60) {
     const timeInHours = timeInMins / 60;
     const rounded = Math.abs(Math.round(timeInHours));
-    return `${rounded} hours`; 
+    return `${rounded} hours`;
   } else {
-    return `${timeInMins} mins`; 
+    return `${timeInMins} mins`;
   }
-}
+};
 
 export const TrainTimes = ({
   scheduled_departure_utc,
