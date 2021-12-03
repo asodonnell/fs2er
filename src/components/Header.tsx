@@ -6,12 +6,24 @@ const ParentHeader = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  text-align: left;
+  margin: 0 10px 0 10px;
+`;
+
+const StyledH1Container = styled.div`
+  width: 100%;
+`;
+
+const StyledP = styled.p`
+  max-width: 500px;
 `;
 
 const RefreshBtn = styled.button`
   height: 50px;
   width: 10vw;
   min-width: 10rem;
+  margin-top: 50px;
+  margin-bottom: 16px;
   background-color: white;
   border: 0.5px;
   border-radius: 25px;
@@ -56,16 +68,25 @@ interface Props {
 const Header = ({ clickHandler, isLoading }: Props) => {
   return (
     <ParentHeader>
-      <h1>Flinders Street to East Richmond Station</h1>
+      <StyledH1Container>
+        <h1>Flinders Street to <br/> East Richmond</h1>
+        <StyledP>Trains departing from Flinders Street Station, that are <em>definitely</em> stopping at East Richmond Station.</StyledP>
+      </StyledH1Container>
+
       <RefreshBtn onClick={clickHandler} disabled={isLoading}>
         {isLoading === true ? (
-          <Rotate>
-            <RiRefreshLine />
-          </Rotate>
+          <>
+            <Rotate>
+              <RiRefreshLine />
+            </Rotate>
+            Loading
+          </>
         ) : (
-          <RiRefreshLine />
+          <>
+            <RiRefreshLine />
+            Refresh
+          </>
         )}
-        Refresh
       </RefreshBtn>
     </ParentHeader>
   );

@@ -13,7 +13,6 @@ const Home = () => {
   const [departures, setDepartures] = useState<any[]>([]);
   const [runs, setRuns] = useState<Run[]>([]);
   const [refresh, setRefresh] = useState<boolean>(false);
-  const [autoRefresh, setAutoRefresh] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
 
@@ -78,12 +77,6 @@ const Home = () => {
     setRuns([]);
     getRouteInfo();
   }, [refresh]);
-
-  useEffect(() => {
-    if (autoRefresh) {
-      getRouteInfo();
-    }
-  }, [autoRefresh]);
 
   const refreshFeed = () => {
     setRefresh(!refresh);
