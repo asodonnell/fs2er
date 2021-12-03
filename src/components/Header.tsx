@@ -22,8 +22,8 @@ const RefreshBtn = styled.button`
   height: 50px;
   width: 10vw;
   min-width: 10rem;
-  margin-top: 50px;
-  margin-bottom: 16px;
+  margin-top: 10px;
+  margin-bottom: 20px;
   background-color: white;
   border: 0.5px;
   border-radius: 25px;
@@ -69,8 +69,13 @@ const Header = ({ clickHandler, isLoading }: Props) => {
   return (
     <ParentHeader>
       <StyledH1Container>
-        <h1>Flinders Street to <br/> East Richmond</h1>
-        <StyledP>Trains departing from Flinders Street Station, that are <em>definitely</em> stopping at East Richmond Station.</StyledP>
+        <h1>
+          Flinders Street to <br /> East Richmond
+        </h1>
+        <StyledP>
+          Trains departing from Flinders Street Station, that are{" "}
+          <em>definitely</em> stopping at East Richmond Station.
+        </StyledP>
       </StyledH1Container>
 
       <RefreshBtn onClick={clickHandler} disabled={isLoading}>
