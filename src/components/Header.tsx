@@ -59,13 +59,18 @@ const Header = ({ clickHandler, isLoading }: Props) => {
       <h1>Flinders Street to East Richmond Station</h1>
       <RefreshBtn onClick={clickHandler} disabled={isLoading}>
         {isLoading === true ? (
-          <Rotate>
-            <RiRefreshLine />
-          </Rotate>
+          <>
+            <Rotate>
+              <RiRefreshLine />
+            </Rotate>
+            Loading
+          </>
         ) : (
-          <RiRefreshLine />
+          <>
+            <RiRefreshLine />
+            Refresh
+          </>
         )}
-        Refresh
       </RefreshBtn>
     </ParentHeader>
   );
