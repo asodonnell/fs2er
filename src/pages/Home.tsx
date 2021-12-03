@@ -44,19 +44,15 @@ const Home = () => {
         ]).then((r) => {
           const runs = r.flatMap((r) => r.runs);
           const finalListOfRuns: Run[] = [];
-          console.log(runs);
-          console.log(departures[0]);
           sortedTimeDepartures.forEach((depElement: Departure, index: any) => {
             runs.forEach((runElement) => {
               if(depElement.run_ref === runElement.run_ref){
-                console.log(runElement.run_ref, depElement.run_ref);
                 finalListOfRuns.push(runElement);
                 return;
               }
             });
        
           });
-          console.log("finalListOfRuns", finalListOfRuns);
           if (finalListOfRuns !== []) {
             setRuns(finalListOfRuns);
             setError(false);
@@ -64,6 +60,7 @@ const Home = () => {
             setError(true);
           }
           setLoading(false);
+          console.log("fetched");
         });
       })
       .catch((error) => {
