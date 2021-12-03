@@ -75,13 +75,18 @@ const Header = ({ clickHandler, isLoading }: Props) => {
 
       <RefreshBtn onClick={clickHandler} disabled={isLoading}>
         {isLoading === true ? (
-          <Rotate>
-            <RiRefreshLine />
-          </Rotate>
+          <>
+            <Rotate>
+              <RiRefreshLine />
+            </Rotate>
+            Loading
+          </>
         ) : (
-          <RiRefreshLine />
+          <>
+            <RiRefreshLine />
+            Refresh
+          </>
         )}
-        Refresh
       </RefreshBtn>
     </ParentHeader>
   );
