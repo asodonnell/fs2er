@@ -43,6 +43,18 @@ export const TrainTimesStyled = styled.div<StyledComponentProps>`
   }
 `;
 
+export const PlatformPill = styled.div<StyledComponentProps>`
+  border: 2px solid ${(props: { platformColour: any; }) => props.platformColour};
+  border-radius: 1rem;
+  padding: 0.2rem 0.6rem 0.25rem 0.6rem;
+  position: relative;
+  right: 0.4rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+  letter-spacing: 0.05rem;
+  color: #3e3e3e;
+`;
+
 export const GrowWrapper = styled.div`
 transition: all 0.2s ease-in-out;
 
@@ -56,12 +68,16 @@ margin: 10px;
 export const Row = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 8px;
+  //border: 1px solid blue;
 `;
 
 export const EstimatedTime = styled.div`
   display: flex;
   justify-content: space-between;
+  font-weight: 500;
+  color: #1a1a1a;
 `;
  
 export const NoActiveTime = styled.div`

@@ -6,6 +6,7 @@ import {
   EstimatedTime,
   GrowWrapper,
   NoActiveTime,
+  PlatformPill
 } from "./styles";
 interface Props {
   scheduled_departure_utc: string;
@@ -96,7 +97,7 @@ export const TrainTimes = ({
           <div>{convertDate(scheduled_departure_utc)}</div>
         </Row>
         <Row>
-          <div>Platform {platform_number}</div>
+          <PlatformPill platformColour={platformColour(platform_number)}>PLATFORM {platform_number}</PlatformPill>
           <div>
             <EstimatedTime>
               {estimated_departure_utc ? (
