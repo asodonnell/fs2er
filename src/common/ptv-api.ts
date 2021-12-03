@@ -49,3 +49,22 @@ export const getListOfRuns = async (runs: Departure[]) => {
 
   return newRuns;
 };
+
+export const getRunDepartures = async (route_id: string) => {
+  let response = await fetch(
+    `${BASE_URL}${ptvSig.pathWithSig(
+      `/v3/runs/route/${route_id}/route_type/0`,
+      [{ name: "route_types", value: "0" }],
+      DEV_ID,
+      DEV_KEY
+    )}`
+  );
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const data = await response.json();
+
+  return data;
+};
