@@ -13,6 +13,7 @@ const Home = () => {
   const [departures, setDepartures] = useState<any[]>([]);
   const [runs, setRuns] = useState<Run[]>([]);
   const [refresh, setRefresh] = useState<boolean>(false);
+  const [autoRefresh, setAutoRefresh] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
 
@@ -87,6 +88,7 @@ const Home = () => {
       setAutoRefresh(!autoRefresh);
     }, 30_000);
   };
+
 
   refreshItems();
 
